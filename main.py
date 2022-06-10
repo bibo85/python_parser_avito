@@ -36,6 +36,17 @@ while True:
             elem = browser.find_element(By.CLASS_NAME, 'Tabs-nav-tab-title-OGjV6')
             count_active = int(elem.text.split()[0])  # количество активных объявлений
             no_of_pagedown = count_active // 16  # количество страниц для прокрутки
+
+            # прокручиваем страницу до самого конца и получаем содержимое всей страницы
+            elem = browser.find_element(By.TAG_NAME, 'body')  # элемент, от которого делаем прокрутку страницы
+            while no_of_pagedown:
+                elem.send_keys(Keys.END)
+                time.sleep(0.5)
+                no_of_pagedown -= 1
+
+            html = browser.page_source  # содержимое страницы
+
+
             break
         except Exception as exc:
             print(exc)
