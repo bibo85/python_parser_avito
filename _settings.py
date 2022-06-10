@@ -1,7 +1,7 @@
 google_json = ''  # файл json для доступа к таблицам, полученный по инструкции в файле instruction.txt
 source_sheet_url = ''  # адрес таблицы источника
 source_name_worksheet = ''  # имя листа таблицы источника
-source_start_col = ''  # колонка, из которой брать url (A, B, C...)
+source_col = ''  # колонка, из которой брать url (A, B, C...)
 source_start__row = ''  # начальная строка, с которой берем url (1, 2, 3...)
 source_end_text = 'Стоп'  # слово, по которому определяется конец списка url
 result_sheet_url = ''  # адрес конечной таблицы
