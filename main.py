@@ -24,6 +24,9 @@ while True:
     # останавливаем парсер, если url больше нет
     if url == settings.source_end_text:
         break
+    if not url:
+        current_row += 1
+        continue
 
     print(f'Получаем данные по url: {url}')
     # получаем данные с сайта по url
