@@ -9,14 +9,16 @@ from selenium.webdriver.common.keys import Keys
 print('Обращаемся к Гугл таблице')
 google_account = gspread.service_account(filename=settings.google_json)  # настройка для подключения к гугл таблицам
 source = google_account.open_by_url(settings.source_sheet_url)  # открывает таблицу с url
-source_worksheet = source.worksheet(settings.source_name_worksheet)  # открываем нужный лист с url
+source_worksheet = source.worksheet(settings.source_name_worksheet)  # открываем лист с списком url
+result_table = google_account.open_by_url(settings.result_sheet_url)  # открывает таблицу с результатами
+result_worksheet = source.worksheet(settings.result_name_worksheet)  # открываем лист с результатами
 col = settings.source_col  # колонка, из которой получаем url
 current_row = settings.source_start_row  # текущая строка
 current_result_col = settings.result_start_col
 
 # запускаем в работу парсер
 while True:
-    time.sleep(5)
+    time.sleep(10)
     # получаем url
     url = source_worksheet.acell(f'{col}{current_row}').value
     # останавливаем парсер, если url больше нет
@@ -32,7 +34,7 @@ while True:
             chrome_options.add_argument("--headless")  # добавляем в опции режим headless (без графического интерфейса)
             browser = webdriver.Chrome(options=chrome_options)  # создаем браузер
             browser.get(url)  # переходим по ссылке
-            time.sleep(2)
+            time.sleep(3)
 
             # получаем имя клиента, количество активных объявлений и страниц
             client = browser.find_element(By.CLASS_NAME, 'desktop-1tdqab')
@@ -60,7 +62,6 @@ while True:
 
             # обновляем данные в таблице с ценами
             print('Обновляем данные по клиенту в таблице с ценами')
-            result_worksheet = source.worksheet(settings.result_name_worksheet)
             data = [client.text, url]
             data.extend(prices)
             row = 1
@@ -80,3 +81,4 @@ while True:
             break
     # берем следующую строку
     current_row += 1
+print('Скрипт завершил работу')
