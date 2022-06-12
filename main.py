@@ -62,6 +62,7 @@ while True:
             print(exc)
             break
     # спим и берем следующую строку
+    print('Берем следующую строку и спим')
     time.sleep(10)
     current_row += 1
 print('Скрипт завершил работу')
