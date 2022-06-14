@@ -38,10 +38,12 @@ while True:
             time.sleep(3)
 
             # получаем имя клиента, количество активных объявлений и страниц для прокрутки
+            print('Получаем данные по клиенту')
             client, count_active, no_of_pagedown = engine.get_info_for_page(browser)
             print(f'Клиент: {client.text}, Активных объявлений: {count_active}')
 
             # прокручиваем страницу до самого конца и получаем содержимое всей страницы
+            print('Прокручиваем страницу')
             browser = engine.page_scroll(browser, no_of_pagedown)
             html = browser.page_source  # содержимое страницы
 

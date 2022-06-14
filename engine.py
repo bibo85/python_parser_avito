@@ -27,7 +27,8 @@ def html_parser(html):
     raw_prices = soup.find_all('span', {'class': 'price-text-_YGDY text-text-LurtD text-size-s-BxGpL'})
     prices = []
     for raw_price in raw_prices:
-        price = int(raw_price.text.replace('₽', '').replace(' ', ''))
+        print(raw_price)
+        price = int(raw_price.text.replace('₽', '').replace(' c НДС', '').replace(' ', ''))
         prices.append(price)
     return prices
 
