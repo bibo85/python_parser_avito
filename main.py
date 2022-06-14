@@ -39,6 +39,10 @@ while True:
 
             # получаем имя клиента, количество активных объявлений и страниц для прокрутки
             print('Получаем данные по клиенту')
+            check_profile = engine.profile_activity_check(browser)
+            if not check_profile:
+                print('Клиент неактивный')
+                break
             client, count_active, no_of_pagedown = engine.get_info_for_page(browser)
             print(f'Клиент: {client.text}, Активных объявлений: {count_active}')
 

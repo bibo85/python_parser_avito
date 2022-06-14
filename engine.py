@@ -5,6 +5,13 @@ from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 
 
+def profile_activity_check(browser):
+    elem = browser.find_element(By.CLASS_NAME, 'Tabs-nav-tab-title-OGjV6')
+    if 'активных' not in elem.text:
+        return False
+    return True
+
+
 def get_info_for_page(browser):
     client = browser.find_element(By.CLASS_NAME, 'desktop-1tdqab')
     elem = browser.find_element(By.CLASS_NAME, 'Tabs-nav-tab-title-OGjV6')
@@ -27,7 +34,6 @@ def html_parser(html):
     raw_prices = soup.find_all('span', {'class': 'price-text-_YGDY text-text-LurtD text-size-s-BxGpL'})
     prices = []
     for raw_price in raw_prices:
-        print(raw_price)
         price = int(raw_price.text.replace('₽', '').replace(' c НДС', '').replace(' ', ''))
         prices.append(price)
     return prices
