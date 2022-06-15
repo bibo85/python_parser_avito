@@ -1,6 +1,7 @@
 import time
 import gspread
 from selenium import webdriver
+from selenium.webdriver.firefox.options import Options
 import settings
 import engine
 
@@ -31,11 +32,18 @@ while True:
     while True:
         try:
             # задаем браузер и обращаемся к url
+            # Google Chrome
             chrome_options = webdriver.ChromeOptions()  # инициализируем опции для Хрома
             chrome_options.add_argument("--headless")  # добавляем в опции режим headless (без графического интерфейса)
             browser = webdriver.Chrome(options=chrome_options)  # создаем браузер
             browser.get(url)  # переходим по ссылке
             time.sleep(3)
+
+            # FireFox
+            # geckodriver_path = ''  # путь к Geckodriver. Пример: /usr/bin/geckodriver
+            # options = Options()
+            # options.headless = True
+            # browser = webdriver.Firefox(options=options, executable_path=geckodriver_path)
 
             # получаем имя клиента, количество активных объявлений и страниц для прокрутки
             print('Получаем данные по клиенту')
