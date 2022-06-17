@@ -4,7 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 
-
 TARGETS = {
     'cars': 'Марки и модели автомобилей',
     'prices': 'Цены на автомобили'
@@ -54,12 +53,20 @@ def page_scroll(browser, no_of_pagedown):
 
 def html_parser(html, parsing_target):
     soup = BeautifulSoup(html, "html.parser")
-    raw_prices = soup.find_all('span', {'class': 'price-text-_YGDY text-text-LurtD text-size-s-BxGpL'})
-    prices = []
-    for raw_price in raw_prices:
-        price = int(raw_price.text.replace('₽', '').replace(' c НДС', '').replace(' ', ''))
-        prices.append(price)
-    return prices
+    data = []
+    if parsing_target == 'prices':
+        prices = soup.find_all('span', {'class': 'price-text-_YGDY text-text-LurtD text-size-s-BxGpL'})
+        for price in prices:
+            price = int(price.text.replace('₽', '').replace(' c НДС', '').replace(' ', ''))
+            data.append(price)
+    elif parsing_target == 'cars':
+        cars = soup.find_all('h3', {
+            'class': 'title-root-zZCwT '
+                     'body-title-drnL0 title-root_maxHeight-X6PsH text-text-LurtD text-size-s-BxGpL text-bold-SinUO'})
+        for car in cars:
+            car = car.text.split(',')[0]
+            data.append(car)
+    return data
 
 
 def google_sheets_updater(worksheet, data, col):

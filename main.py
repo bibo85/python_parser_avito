@@ -63,14 +63,16 @@ while True:
             browser = engine.page_scroll(browser, no_of_pagedown)
             html = browser.page_source  # содержимое страницы
 
-            # получаем стоимости автомобилей
-            prices = engine.html_parser(html)
+            # получаем данные автомобилей, в зависимости от целей парсинга
+            data = engine.html_parser(html, parsing_target)
 
             # обновляем данные в таблице с ценами
             print(f'Обновляем данные по клиенту {client.text} в таблице с ценами')
-            data = [client.text, url]  # формируем список с данным для обновления
-            data.extend(prices)
-            engine.google_sheets_updater(worksheet=result_worksheet, data=data, col=current_result_col)
+            data_for_update_sheets = [client.text, url]  # формируем список с данным для обновления
+            data_for_update_sheets.extend(data)
+            engine.google_sheets_updater(worksheet=result_worksheet,
+                                         data=data_for_update_sheets,
+                                         col=current_result_col)
 
             # закрываем браузер и сдвигаем колонку в таблице с результатом
             browser.close()
