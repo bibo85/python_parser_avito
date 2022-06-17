@@ -52,7 +52,7 @@ def page_scroll(browser, no_of_pagedown):
     return browser
 
 
-def html_parser(html):
+def html_parser(html, parsing_target):
     soup = BeautifulSoup(html, "html.parser")
     raw_prices = soup.find_all('span', {'class': 'price-text-_YGDY text-text-LurtD text-size-s-BxGpL'})
     prices = []
