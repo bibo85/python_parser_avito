@@ -5,6 +5,29 @@ from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 
 
+TARGETS = {
+    'cars': 'Марки и модели автомобилей',
+    'prices': 'Цены на автомобили'
+}
+
+
+def parsing_target_selection():
+    dict_keys = list(TARGETS)
+    while True:
+        i = 1
+        for val in TARGETS.values():
+            print(i, val)
+            i += 1
+        user_response = input('Что парсим с сайта: ')
+        if user_response.isdigit() and 0 < int(user_response) <= len(dict_keys):
+            choice = TARGETS[dict_keys[int(user_response) - 1]]
+            break
+        else:
+            print('Необходимо ввести номер пункта меню')
+    print(f'Парсим {TARGETS[choice]}')
+    return choice
+
+
 def profile_activity_check(browser):
     elem = browser.find_element(By.CLASS_NAME, 'Tabs-nav-tab-title-OGjV6')
     if 'активных' not in elem.text:
@@ -13,10 +36,10 @@ def profile_activity_check(browser):
 
 
 def get_info_for_page(browser):
-    client = browser.find_element(By.CLASS_NAME, 'desktop-1tdqab')
-    elem = browser.find_element(By.CLASS_NAME, 'Tabs-nav-tab-title-OGjV6')
+    client = browser.find_element(By.CLASS_NAME, 'desktop-1tdqab')  # название клиента
+    elem = browser.find_element(By.CLASS_NAME, 'Tabs-nav-tab-title-OGjV6')  # получаем блок с количеством объявлений
     count_active = int(elem.text.split()[0])  # количество активных объявлений
-    no_of_pagedown = count_active // 16  # количество страниц для прокрутки
+    no_of_pagedown = count_active // 16  # считаем количество страниц для прокрутки
     return client, count_active, no_of_pagedown
 
 

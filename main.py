@@ -5,6 +5,8 @@ from selenium.webdriver.firefox.options import Options
 import settings
 import engine
 
+user_choice = engine.parsing_target_selection()
+
 print('Обращаемся к Гугл таблице')
 google_account = gspread.service_account(filename=settings.google_json)  # настройка для подключения к гугл таблицам
 source = google_account.open_by_url(settings.source_sheet_url)  # открываем таблицу с url
