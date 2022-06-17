@@ -19,7 +19,7 @@ def parsing_target_selection():
             i += 1
         user_response = input('Что парсим с сайта: ')
         if user_response.isdigit() and 0 < int(user_response) <= len(dict_keys):
-            choice = TARGETS[dict_keys[int(user_response) - 1]]
+            choice = dict_keys[int(user_response) - 1]
             break
         else:
             print('Необходимо ввести номер пункта меню')
