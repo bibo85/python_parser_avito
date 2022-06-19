@@ -57,6 +57,8 @@ def html_parser(html, parsing_target):
     if parsing_target == 'prices':
         prices = soup.find_all('span', {'class': 'price-text-_YGDY text-text-LurtD text-size-s-BxGpL'})
         for price in prices:
+            if price.text == 'Цена не указана':
+                continue
             price = int(price.text.replace('₽', '').replace(' c НДС', '').replace(' ', ''))
             data.append(price)
     elif parsing_target == 'cars':
