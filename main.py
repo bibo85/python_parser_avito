@@ -40,14 +40,18 @@ while True:
             chrome_options = webdriver.ChromeOptions()  # инициализируем опции для Хрома
             chrome_options.add_argument("--headless")  # добавляем в опции режим headless (без графического интерфейса)
             browser = webdriver.Chrome(options=chrome_options)  # создаем браузер
-            browser.get(url)  # переходим по ссылке
-            time.sleep(3)
 
             # FireFox
             # geckodriver_path = ''  # путь к Geckodriver. Пример: /usr/bin/geckodriver
             # options = Options()
             # options.headless = True
             # browser = webdriver.Firefox(options=options, executable_path=geckodriver_path)
+
+            print('Переходим по ссылке и ожидаем загрузку страницы')
+            browser = engine.connect_to_url_and_load_the_site(browser, url)
+            if not browser:  # если страница не загружена с третьей попытки, берем следующую ссылку
+                continue
+            time.sleep(3)
 
             # получаем имя клиента, количество активных объявлений и страниц для прокрутки
             print('Получаем данные по клиенту')

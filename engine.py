@@ -10,6 +10,21 @@ TARGETS = {
 }
 
 
+def connect_to_url_and_load_the_site(browser, url):
+    browser.set_page_load_timeout(10)
+    connection_attempts = 0
+    while connection_attempts < 3:
+        try:
+            browser.get(url)
+            return browser
+        except Exception:
+            print(f'Сайт не загружен в течение 10 секунд')
+            print(f'Загружаемая страница: {url}')
+            connection_attempts += 1
+        continue
+    return False
+
+
 def parsing_target_selection():
     dict_keys = list(TARGETS)
     while True:
