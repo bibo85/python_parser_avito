@@ -44,7 +44,7 @@ def parsing_target_selection():
 
 def profile_activity_check(browser):
     elem = browser.find_element(By.CLASS_NAME, 'Tabs-nav-tab-title-OGjV6')
-    if 'активных' not in elem.text:
+    if 'активн' not in elem.text:
         return False
     return True
 
