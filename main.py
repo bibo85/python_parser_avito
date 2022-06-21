@@ -53,7 +53,8 @@ while True:
             print('Переходим по ссылке и ожидаем загрузку страницы')
             browser = engine.connect_to_url_and_load_the_site(browser, url)
             if not browser:  # если страница не загружена с третьей попытки, берем следующую ссылку
-                continue
+                current_result_col += 1
+                break
             time.sleep(3)
 
             # получаем имя клиента, количество активных объявлений и страниц для прокрутки
