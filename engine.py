@@ -40,6 +40,7 @@ def connect_to_url_and_load_the_site(browser, url):
             print(f'Пытались загрузить url: {url}')
             print('Пробуем загрузить еще раз')
             connection_attempts += 1
+            time.sleep(3)
         continue
     return False
 
