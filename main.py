@@ -22,10 +22,13 @@ current_result_col = settings.result_start_col
 # запускаем в работу парсер
 while True:
     # получаем url
-    url = source_worksheet.acell(f'{col}{current_row}').value
+    print('Получаем url')
+    url = engine.get_url_from_sheets(source_worksheet, col, current_row)
+
     # останавливаем парсер, если url больше нет
     if url == settings.source_end_text:
         break
+
     # берем следующую строку, если url пустой
     if not url:
         current_row += 1

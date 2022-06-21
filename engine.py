@@ -10,6 +10,24 @@ TARGETS = {
 }
 
 
+def get_url_from_sheets(source_worksheet, col, current_row):
+    sec = 0  # сколько секунд спим перед попытками
+    connection_attempts = 0  # счетчик попыток
+    url = None
+    # если попыток меньше 5, то пробуем получить url, каждый раз спим дольше
+    while connection_attempts < 5:
+        time.sleep(sec)
+        try:
+            url = source_worksheet.acell(f'{col}{current_row}').value
+            break
+        except Exception as exc:
+            print('Не удалось получить url')
+            print(f'Ошибка {exc}')
+            connection_attempts += 1
+            sec += 2
+    return url
+
+
 def connect_to_url_and_load_the_site(browser, url):
     browser.set_page_load_timeout(10)
     connection_attempts = 0
@@ -19,7 +37,8 @@ def connect_to_url_and_load_the_site(browser, url):
             return browser
         except Exception:
             print(f'Сайт не загружен в течение 10 секунд')
-            print(f'Загружаемая страница: {url}')
+            print(f'Пытались загрузить url: {url}')
+            print('Пробуем загрузить еще раз')
             connection_attempts += 1
         continue
     return False
